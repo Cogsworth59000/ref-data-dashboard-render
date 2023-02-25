@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
-from st_aggrid import AgGrid, GridOptionsBuilder
+#from st_aggrid import AgGrid, GridOptionsBuilder
 
 st.set_page_config(
     page_title="REF Results Dashboard",
