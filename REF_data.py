@@ -10,15 +10,19 @@ st.set_page_config(
     layout="wide"
 )
 
+# title #
 title = "REF 2021 results and submissions data"
 st.title(":bar_chart:" + title)
-st.sidebar.markdown(":bar_chart: Filter the data")
+
+# filter icon #
+css_icon = '''
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<i class="fa fa-filter"></i>
+'''
 
 # --------- FUNCTIONS ---------- #
 def show_grid():
-    # AgGrid(df_selection, fit_columns_on_grid_load=True, wrap_header_text=True)
-    # st.dataframe(df_selection)
-
     styler = df_selection.style.hide_index().format(subset=[
         "GPA","FTE", "4*", "3*", "2*", "1*", "U/C", "Doctoral awards"],
         decimal='.',
@@ -37,7 +41,7 @@ def get_data_from_excel():
         engine="openpyxl",
         sheet_name="REF2021",
         skiprows=6,
-        usecols="A:CR",
+        usecols="A:BD",
         nrows=7559,
     )
     df.set_index("Institution name")
@@ -46,14 +50,33 @@ def get_data_from_excel():
     df["UOA number"] = df["UOA number"].astype("Int64")
     # df['total_ResearchIncome_forHEIforUOA_7years'] = df['total_ResearchIncome_forHEIforUOA_7years'].map(lambda x: f"£{x/1000:,.1f}k")
     # -- that was causing issues when trying to calculate on those numbers below (though back-conversion should be easy somehow)
-    df["REF2021_total_ResearchIncome_forHEIforUOA_7years"] = df["REF2021_total_ResearchIncome_forHEIforUOA_7years"].map(lambda x: f"{round(x / 1000, 1)}")
+    # df["REF2021_total_ResearchIncome_forHEIforUOA_7years"] = df["REF2021_total_ResearchIncome_forHEIforUOA_7years"].map(lambda x: f"{round(x / 1000, 1)}")
     df.rename(columns={"REF2021_total_ResearchIncome_forHEIforUOA_7years": "Income (GBP)", "REF2021_DoctoralAwards_7years": "Doctoral awards"}, inplace=True)
+    return df
+
+@st.cache
+def get_2014_data_from_excel():
+    df = pd.read_excel(
+        io="all_ref_results.xlsx",
+        engine="openpyxl",
+        sheet_name="REF2014",
+        skiprows=7,
+        usecols="A:AX",
+        nrows=7652,
+    )
+    df.set_index("Institution name")
+    df["GPA"] = df["GPA"].round(2)
+    df["FTE"] = df["FTE"].round(2)
+    df["UOA number"] = df["UOA number"].astype("Int64")
+    # df['total_ResearchIncome_forHEIforUOA_7years'] = df['total_ResearchIncome_forHEIforUOA_7years'].map(lambda x: f"£{x/1000:,.1f}k")
+    # -- that was causing issues when trying to calculate on those numbers below (though back-conversion should be easy somehow)
+    # df["total_ResearchIncome_forHEIforUOA_5years"] = df["total_ResearchIncome_forHEIforUOA_5years"].map(lambda x: f"{round(x / 1000, 1)}")
+    df.rename(columns={"total_ResearchIncome_forHEIforUOA_5years": "Income (GBP)", "DoctoralAwards_5years": "Doctoral awards"}, inplace=True)
     return df
 
 
 df = get_data_from_excel()
-# print(df.columns.values.tolist())
-
+df2014 = get_2014_data_from_excel()
 
 # -- there is an issue about rounding decimal places. You can do it in pandas but streamlit won't display it with its .dataframe or .write methods for some reason. It works with AgGrid#
 
@@ -68,24 +91,21 @@ df_display = df[[
     "Income (GBP)", "Doctoral awards"
 ]]
 
-df_2014 = df[[
+df_2014 = df2014[[
     "Institution name",
     "Main panel",
     "UOA number",
     "UOA name",
     "Profile",
-    "REF2014_FTE",
-    "REF2014_4*", "REF2014_3*", "REF2014_2*", "REF2014_1*", "REF2014_U/C", "REF2014_GPA",
-    "REF2014_total_ResearchIncome_forHEIforUOA_5years", "REF2014_DoctoralAwards_5years"
+    "FTE",
+    "4*", "3*", "2*", "1*", "U/C", "GPA",
+    "Income (GBP)", "Doctoral awards"
 ]]
 
-df_2014.rename(columns={"REF2014_total_ResearchIncome_forHEIforUOA_5years": "REF2014 income (GBP)", "REF2014_DoctoralAwards_5years": "REF2014 doctoral awards"}, inplace=True)
+# df_2014.rename(columns={"REF2014_total_ResearchIncome_forHEIforUOA_5years": "REF2014 income (GBP)", "REF2014_DoctoralAwards_5years": "REF2014 doctoral awards"}, inplace=True)
 
 #---- SIDEBAR ----#
-
-
-
-st.sidebar.header("Filter the data:")
+st.sidebar.markdown(css_icon + " Filter the data", unsafe_allow_html=True)
 
 main_panel = st.sidebar.selectbox(
     "Select Main Panel:",
@@ -133,10 +153,10 @@ hide_table = st.sidebar.button("Hide table", help="Hide the table", on_click=uns
 # ------- MAINPAGE ------ #
 st.markdown("##") # new paragraph
 st.markdown("---")
-
+st.write("Averages over filtered selection:")
 # -- Metrics
 
-df_selection["Income (GBP)"] = df_selection["Income (GBP)"].map(lambda x: float(x) * 1000)
+# df_selection["Income (GBP)"] = df_selection["Income (GBP)"].map(lambda x: float(x) * 1000)
 try:
     average_FourStar = int(df_selection["4*"].mean())
     average_size = round(df_selection["FTE"].mean(), 2)
@@ -165,14 +185,14 @@ try:
     l_col1, r_col1 = st.columns(2)
 
     four_star2021_slice = df_selection[["Institution name", "4*", "Profile"]].sort_values(by="4*")
-    four_star2014_slice = df_selection_2014[["Institution name", "REF2014_4*","Profile"]].sort_values(by="REF2014_4*")
-    four_star2014_slice.rename(columns={"REF2014_4*": "4*"}, inplace=True)
+    four_star2014_slice = df_selection_2014[["Institution name", "4*","Profile"]].sort_values(by="4*")
 
     fig2021 = px.bar(four_star2021_slice, x="Institution name", color="Profile",
                  y="4*",
                  title="4* fraction by institution, REF2021 (sub-profile view)",
                  barmode='group',
                  facet_col="Profile",
+                 color_discrete_sequence=["lightslategray", "cornflowerblue", "lightblue", "gainsboro"]
                  )
 
     fig2021.update_layout(
@@ -188,6 +208,7 @@ try:
                  title="4* fraction by institution, REF2014 (sub-profile view)",
                  barmode='group',
                  facet_col="Profile",
+                 color_discrete_sequence=["lightslategray", "cornflowerblue", "lightblue", "gainsboro"]
                  )
 
     fig2014.update_layout(
@@ -204,8 +225,7 @@ try:
         color="Profile",
         orientation="h",
         title="4* fraction by institution, REF2021 (grouped view)",
-        #color_discrete_sequence=["#0b5f9f"] * len(four_star2021_slice),
-        template="plotly_white"
+        color_discrete_sequence=["lightslategray", "cornflowerblue", "lightblue", "gainsboro"]
     )
 
     fig_2021fourstar.update_layout(
@@ -220,8 +240,7 @@ try:
         color="Profile",
         orientation="h",
         title="4* fraction by institution, REF2014 (grouped view)",
-        #color_discrete_sequence=["#ffe599"] * len(four_star2014_slice),
-        template="plotly_white"
+        color_discrete_sequence=["lightslategray", "cornflowerblue", "lightblue", "gainsboro"]
     )
 
     fig_2014fourstar.update_layout(
@@ -230,15 +249,12 @@ try:
     )
 
     with l_col1:
-        #st.plotly_chart(fig_2021fourstar)
         st.plotly_chart(fig_2021fourstar, use_container_width=True)
         st.plotly_chart(fig2021, use_container_width=True)
 
     with r_col1:
         st.plotly_chart(fig_2014fourstar, use_container_width=True)
         st.plotly_chart(fig2014, use_container_width=True)
-
-
 
     st.markdown("---")
 
@@ -263,10 +279,10 @@ try:
     with l_col2:
         st.plotly_chart(fig_2021income, use_container_width=True)
 
-    income2014_slice = df_selection_2014.loc[(df_selection_2014["Profile"]=="Overall"),["Institution name", "REF2014 income (GBP)"]].sort_values(by="REF2014 income (GBP)")
+    income2014_slice = df_selection_2014.loc[(df_selection_2014["Profile"]=="Overall"),["Institution name", "Income (GBP)"]].sort_values(by="Income (GBP)")
     fig_2014income = px.bar(
         income2014_slice,
-        x="REF2014 income (GBP)",
+        x="Income (GBP)",
         y="Institution name",
         orientation="h",
         title="Income by institution, REF2014",
@@ -305,10 +321,10 @@ try:
     with l_col2:
         st.plotly_chart(fig_2021phd, use_container_width=True)
 
-    phd2014_slice = df_selection_2014.loc[(df_selection_2014["Profile"]=="Overall"),["Institution name", "REF2014 doctoral awards"]].sort_values(by="REF2014 doctoral awards")
+    phd2014_slice = df_selection_2014.loc[(df_selection_2014["Profile"]=="Overall"),["Institution name", "Doctoral awards"]].sort_values(by="Doctoral awards")
     fig_2014phd = px.bar(
         phd2014_slice,
-        x="REF2014 doctoral awards",
+        x="Doctoral awards",
         y="Institution name",
         orientation="h",
         title="Doctoral awards by institution, REF2014",

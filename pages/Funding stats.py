@@ -8,5 +8,6 @@ import streamlit as st
 
 ## --- StreamlitAPIException: set_page_config() can only be called once per app, and must be called as the first Streamlit command in your script. --- ##
 
-st.title(":bar_chart: Institution dashboard")
+title = "Funding data"
+st.title(":bar_chart:" + title)
 st.sidebar.markdown(":bar_chart: Filter the data")
