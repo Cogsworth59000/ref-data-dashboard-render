@@ -252,7 +252,7 @@ fig_uoa_overview2.update_layout(
         plot_bgcolor="rgba(0,0,0,0)",
         xaxis_title=None,
         yaxis_title=None,
-        yaxis=(dict(range=[-0.3, 0.6], tickformat=",.0%")),
+        yaxis=(dict(range=[-0.4, 0.4], tickformat=",.0%")),
 )
 
 
