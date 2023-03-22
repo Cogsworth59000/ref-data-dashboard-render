@@ -262,7 +262,7 @@ with lcol_0:
     st.plotly_chart(fig_uoa_overview1, use_container_width=True)
 with rcol_0:
     st.plotly_chart(fig_bar_overview2, use_container_width=True)
-    st.write(fig_uoa_overview2, use_container_width=True)
+    st.plotly_chart(fig_uoa_overview2, use_container_width=True)
 
 
 ####---- UOA vs sector -- ######
