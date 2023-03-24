@@ -23,7 +23,7 @@ st.write("2021/22 funding data are [here](https://www.ukri.org/publications/qual
 st.write("2022/23 funding data are [here](https://www.ukri.org/publications/qr-funding-supporting-information-for-2022-to-2023/) (coverage: England).")
 st.markdown("##")
 st.write("Tom Palmer")
-st.write("2023")
+st.write("2022")
 
 ##### ---- FUNCTIONS ---- ####
 

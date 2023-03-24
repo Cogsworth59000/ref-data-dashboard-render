@@ -298,7 +298,7 @@ try:
     fig_ranking_2021.update_traces(marker_color="cornflowerblue")
     fig_ranking_2021.update_layout(
     title=dict(
-        text=f"{HEI} vs UOA {uoa_number} ranking data, REF 2021",
+        text=f"{HEI} vs UOA {uoa_number} {profile} ranking data, REF 2021",
         x=0.5,
         y=0.95,
         font=dict(
@@ -318,7 +318,7 @@ try:
     fig_ranking_2014.update_traces(marker_color="lightblue")
     fig_ranking_2014.update_layout(
     title=dict(
-        text=f"{HEI} vs UOA {uoa_number} ranking data, REF 2014",
+        text=f"{HEI} vs UOA {uoa_number} {profile} ranking data, REF 2014",
         x=0.5,
         y=0.95,
         font=dict(
@@ -354,7 +354,7 @@ try:
 
     fig_profile_2021.update_layout(
         title=dict(
-            text=f"{HEI} UOA {uoa_number} quality profile vs UOA average profile, REF 2021",
+            text=f"{HEI} UOA {uoa_number} {profile} quality profile vs UOA average profile, REF 2021",
             x=0.5,
             y=0.95,
             font=dict(
@@ -379,7 +379,7 @@ try:
 
     fig_profile_2014.update_layout(
         title=dict(
-            text=f"{HEI} UOA {uoa_number} quality profile vs UOA average profile, REF 2021",
+            text=f"{HEI} UOA {uoa_number} {profile} quality profile vs UOA average profile, REF 2021",
             x=0.5,
             y=0.95,
             font=dict(
@@ -404,7 +404,7 @@ try:
 
     fig_median_2021.update_layout(
         title=dict(
-            text=f"{HEI} UOA {uoa_number} quality profile vs UK sector UOA {uoa_number} median quality levels, REF 2021",
+            text=f"{HEI} UOA {uoa_number} {profile} quality profile vs UK sector UOA {uoa_number} median quality levels, REF 2021",
             x=0.5,
             y=0.95,
             font=dict(
@@ -429,7 +429,7 @@ try:
 
     fig_median_2014.update_layout(
         title=dict(
-            text=f"{HEI} UOA {uoa_number} quality profile vs UK sector UOA {uoa_number} median quality levels, REF 2014",
+            text=f"{HEI} UOA {uoa_number} {profile} quality profile vs UK sector UOA {uoa_number} median quality levels, REF 2014",
             x=0.5,
             y=0.95,
             font=dict(
@@ -531,7 +531,7 @@ try:
 
     fig_VolumeShare_2021.update_layout(
         title=dict(
-            text=f"{HEI} UOA {uoa_number} weighted volume as a fraction of UOA {uoa_number} total volume, REF 2021",
+            text=f"{HEI} UOA {uoa_number} weighted volume ({profile}) as a fraction of UOA {uoa_number} total volume, REF 2021",
             x=0.5,
             y=0.95,
             font=dict(
@@ -547,7 +547,7 @@ try:
 
     fig_VolumeShare_2014.update_layout(
         title=dict(
-            text=f"{HEI} UOA {uoa_number} weighted volume as a fraction of UOA {uoa_number} total volume, REF 2014",
+            text=f"{HEI} UOA {uoa_number} weighted volume ({profile}) as a fraction of UOA {uoa_number} total volume, REF 2014",
             x=0.5,
             y=0.95,
             font=dict(

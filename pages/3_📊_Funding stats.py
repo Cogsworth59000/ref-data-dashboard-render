@@ -224,7 +224,7 @@ fig_uoa_overview1 = px.bar(df_funding_by_uoa, x="UOAs", y="Change", color="Main 
 
 fig_uoa_overview1.update_layout(
     title=dict(
-        text="% change in QR funding across UOAs between REF2014 and REF2021 (2022 prices)",
+        text="% change in QR funding across UOAs between REF2014 and REF2021",
         x=0.5
         ),
         font=dict(
@@ -242,7 +242,7 @@ fig_uoa_overview2 = px.bar(df_perFTE_fund_by_uoa, x="UOAs", y="Change", color="M
 
 fig_uoa_overview2.update_layout(
     title=dict(
-        text="% change in QR funding per FTE across UOAs between REF2014 and REF2021 (2022 prices)",
+        text="% change in QR funding per FTE across UOAs between REF2014 and REF2021",
         x=0.5
         ),
         font=dict(
