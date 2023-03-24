@@ -274,22 +274,22 @@ try:
     st.subheader("Ranking data:")
     l_col0, r_col0 = st.columns(2)
 
-    rank_cols = ["No. of submissions", "Size rank", "4* rank", "GPA rank", "Income rank", "PhDs rank"]
+    rank_cols = ["No. of submissions", "4* rank", "GPA rank", "Size rank", "Income rank", "PhDs rank"]
 
     rank_data_2021 = [
         df_uoa["UOA name"].value_counts().iloc[0],
-        df_uoa.loc[df_uoa["Institution name"]==HEI, "REF2021_size_rank_in_UOA"].iloc[0],
         df_uoa.loc[df_uoa["Institution name"]==HEI, "REF2021_four_star_rank_in_UOA_by_Profile"].iloc[0],
         df_uoa.loc[df_uoa["Institution name"]==HEI, "REF2021_GPA_rank_in_UOA"].iloc[0],
+        df_uoa.loc[df_uoa["Institution name"]==HEI, "REF2021_size_rank_in_UOA"].iloc[0],
         df_uoa.loc[df_uoa["Institution name"]==HEI, "REF2021_ResearchIncome_rank_in_UOA"].iloc[0],
         df_uoa.loc[df_uoa["Institution name"]==HEI, "REF2021_DoctoralAwards_rank_in_UOA"].iloc[0]
         ]
 
     rank_data_2014 = [
         df_uoa_2014["UOA name"].value_counts().iloc[0],
-        df_uoa_2014.loc[df_uoa_2014["Institution name"]==HEI, "size_rank_in_UOA"].iloc[0],
         df_uoa_2014.loc[df_uoa_2014["Institution name"]==HEI, "four_star_rank_in_UOA_by_Profile"].iloc[0],
         df_uoa_2014.loc[df_uoa_2014["Institution name"]==HEI, "GPA_rank_in_UOA"].iloc[0],
+        df_uoa_2014.loc[df_uoa_2014["Institution name"]==HEI, "size_rank_in_UOA"].iloc[0],
         df_uoa_2014.loc[df_uoa_2014["Institution name"]==HEI, "income_rank_in_UOA"].iloc[0],
         df_uoa_2014.loc[df_uoa_2014["Institution name"]==HEI, "doctoral_awards_rank_in_UOA"].iloc[0]
     ]
