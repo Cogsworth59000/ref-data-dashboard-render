@@ -409,3 +409,17 @@ with rcol:
 
 st.markdown("##")
 st.write("Weighted volume = 4 x FourStarVolume(HEI) / 5 + ThreeStarVolume(HEI) / 5.", "[Four/Three]StarVolume = [four/three] star fraction x FTE")
+
+st.markdown("---")
+
+lcol4, rcol4 = st.columns(2)
+
+with lcol4:
+    chart_url = "https://datawrapper.dwcdn.net/kWspR/1/"
+    # st.title("Mainstream QR funding by region, REF 2014")
+    st.markdown(f'<iframe src="{chart_url}" frameborder="0" scrolling="no" width="100%" height="800"></iframe>', unsafe_allow_html=True)
+
+with rcol4:
+    chart_url = "https://datawrapper.dwcdn.net/m8oql/1/"
+    # st.title("Mainstream QR funding by region, REF 2014")
+    st.markdown(f'<iframe src="{chart_url}" frameborder="0" scrolling="no" width="100%" height="800"></iframe>', unsafe_allow_html=True)
