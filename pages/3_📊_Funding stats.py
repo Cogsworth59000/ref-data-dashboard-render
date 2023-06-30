@@ -342,12 +342,14 @@ data={
     }
 )
 
-styler_vol = volume_table.style.hide_index().format(subset=[
+styler_vol = volume_table.style.hide().format(subset=[
     "REF 2014","REF 2021", "Factor of"],
     decimal='.',
     precision=2)
 
-styler_fund = funding_table.style.hide_index().format(subset=[
+# style.hide() is style.hide_index() in earlier pandas versions
+
+styler_fund = funding_table.style.hide().format(subset=[
     "REF 2014","REF 2021", "Factor of"],
     decimal='.',
     precision=2)
