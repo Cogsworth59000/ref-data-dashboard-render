@@ -23,10 +23,10 @@ css_icon = '''
 
 # --------- FUNCTIONS ---------- #
 def show_grid():
-    styler = df_selection.style.hide_index().format(subset=[
+    styler = df_selection.style.hide().format(subset=[
         "GPA","FTE", "4*", "3*", "2*", "1*", "U/C", "Doctoral awards"],
         decimal='.',
-        precision=2)
+        precision=0)
     st.dataframe(styler)
 
 def unshow_grid():
@@ -119,7 +119,7 @@ uoa_options = uoa_slice["UOA name"].unique()
 profile = st.sidebar.multiselect(
     "Select Profile:",
     options=df_display["Profile"].unique(),
-    default=df_display["Profile"].unique()
+    default= "Overall"
 )
 
 UOA = st.sidebar.selectbox(
