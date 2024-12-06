@@ -23,7 +23,7 @@ css_icon = '''
 
 # --------- FUNCTIONS ---------- #
 def show_grid():
-    styler = df_selection.style.hide().format(subset=[
+    styler = df_selection.style.hide_index().format(subset=[
         "GPA","FTE", "4*", "3*", "2*", "1*", "U/C", "Doctoral awards"],
         decimal='.',
         precision=0)
