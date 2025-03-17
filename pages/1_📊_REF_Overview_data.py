@@ -26,7 +26,7 @@ def show_grid():
     styler = df_selection.style.hide_index().format(subset=[
         "GPA","FTE", "4*", "3*", "2*", "1*", "U/C", "Doctoral awards"],
         decimal='.',
-        precision=0)
+        precision=1)
     st.dataframe(styler)
 
 def unshow_grid():
